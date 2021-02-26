@@ -15,6 +15,7 @@ source_set("browser_tests") {
     "//brave/common:pref_names",
     "//chrome/app:command_ids",
     "//chrome/browser",
+    "//chrome/browser/profiles:profile",
     "//chrome/browser/ui",
     "//chrome/test:test_support_ui",
     "//components/prefs",
