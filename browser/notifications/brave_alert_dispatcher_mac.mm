@@ -8,8 +8,10 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <vector>
 
 #include "base/callback.h"
+#include "base/containers/flat_set.h"
 #include "base/mac/scoped_nsobject.h"
 #include "base/strings/sys_string_conversions.h"
 #include "chrome/services/mac_notifications/public/cpp/notification_constants_mac.h"
@@ -29,7 +31,8 @@
 }
 
 - (void)closeNotificationWithId:(NSString *)notificationId
-                  withProfileId:(NSString *)profileId {
+                  profileId:(NSString *)profileId
+                  incognito:(BOOL)incognito {
   NSUserNotificationCenter * notificationCenter =
       [NSUserNotificationCenter defaultUserNotificationCenter];
   for (NSUserNotification * candidate in
@@ -56,8 +59,9 @@
 - (void)
 getDisplayedAlertsForProfileId:(NSString *)profileId
                      incognito:(BOOL)incognito
-            notificationCenter:(NSUserNotificationCenter*)notificationCenter
                       callback:(GetDisplayedNotificationsCallback)callback {
+  NSUserNotificationCenter * notificationCenter =
+      [NSUserNotificationCenter defaultUserNotificationCenter];
   std::set<std::string> displayedNotifications;
   for (NSUserNotification * toast in
       [notificationCenter deliveredNotifications]) {
@@ -71,6 +75,30 @@ getDisplayedAlertsForProfileId:(NSString *)profileId
 
   std::move(callback).Run(std::move(displayedNotifications),
                           true /* supports_synchronization */);
+}
+
+- (void)getAllDisplayedAlertsWithCallback:
+    (GetAllDisplayedNotificationsCallback)callback {
+  NSUserNotificationCenter * notificationCenter =
+      [NSUserNotificationCenter defaultUserNotificationCenter];
+
+  std::vector<MacNotificationIdentifier> alertIds;
+  for (NSUserNotification * toast in
+      [notificationCenter deliveredNotifications]) {
+    std::string notificationId = base::SysNSStringToUTF8(
+        [toast.userInfo objectForKey:notification_constants::kNotificationId]);
+    std::string profileId = base::SysNSStringToUTF8([toast.userInfo
+         objectForKey:notification_constants::kNotificationProfileId]);
+    bool incognito = [[toast.userInfo
+        objectForKey:notification_constants::kNotificationIncognito] boolValue];
+
+    alertIds.push_back(
+        {std::move(notificationId), std::move(profileId), incognito});
+  }
+
+  // Create set from std::vector to avoid N^2 insertion runtime.
+  base::flat_set<MacNotificationIdentifier> alertSet(std::move(alertIds));
+  std::move(callback).Run(std::move(alertSet));
 }
 
 @end

@@ -17,15 +17,18 @@
 - (void)dispatchNotification:(NSDictionary *)data;                               // NOLINT
 
 - (void)closeNotificationWithId:(NSString *)notificationId                       // NOLINT
-                  withProfileId:(NSString *)profileId;                           // NOLINT
+                  profileId:(NSString *)profileId                                // NOLINT
+                  incognito:(BOOL)incognito;                                     // NOLINT
 
 - (void)closeAllNotifications;
 
 - (void)
 getDisplayedAlertsForProfileId:(NSString *)profileId                             // NOLINT
                      incognito:(BOOL)incognito
-            notificationCenter:(NSUserNotificationCenter *)notificationCenter    // NOLINT
                       callback:(GetDisplayedNotificationsCallback)callback;      // NOLINT
+
+- (void)getAllDisplayedAlertsWithCallback:                                       // NOLINT
+    (GetAllDisplayedNotificationsCallback)callback;                              // NOLINT
 
 @end
 
