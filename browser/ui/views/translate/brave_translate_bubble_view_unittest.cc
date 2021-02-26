@@ -47,10 +47,20 @@ class MockTranslateBubbleModel : public TranslateBubbleModel {
     view_state_transition_.GoBackFromAdvanced();
   }
 
-  int GetNumberOfLanguages() const override { return 1000; }
+  int GetNumberOfSourceLanguages() const override { return 1000; }
 
-  base::string16 GetLanguageNameAt(int index) const override {
+  int GetNumberOfTargetLanguages() const override { return 1000; }
+
+  base::string16 GetSourceLanguageNameAt(int index) const override {
     return base::ASCIIToUTF16("English");
+  }
+
+  base::string16 GetTargetLanguageNameAt(int index) const override {
+    return base::ASCIIToUTF16("Spanish");
+  }
+
+  std::string GetOriginalLanguageCode() const override {
+    return std::string("en-US");
   }
 
   int GetOriginalLanguageIndex() const override {
