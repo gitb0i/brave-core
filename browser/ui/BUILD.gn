@@ -367,7 +367,10 @@ source_set("ui") {
         "webui/settings/brave_default_extensions_handler.h",
       ]
 
-      deps += [ "//third_party/widevine/cdm:buildflags" ]
+      deps += [
+        "//third_party/widevine/cdm:buildflags",
+        "//brave/components/ipfs/buildflags"
+      ]
 
       if (enable_widevine) {
         deps += [ "//brave/browser/widevine" ]
@@ -385,6 +388,13 @@ source_set("ui") {
       sources += [
         "views/location_bar/onion_location_view.cc",
         "views/location_bar/onion_location_view.h",
+      ]
+    }
+
+    if (ipfs_enabled) {
+      sources += [
+        "views/location_bar/ipfs_location_view.cc",
+        "views/location_bar/ipfs_location_view.h",
       ]
     }
 
