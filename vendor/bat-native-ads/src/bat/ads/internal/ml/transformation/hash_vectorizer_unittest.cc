@@ -19,7 +19,7 @@ namespace ml {
 
 namespace {
 
-const char kHashCheck[] = "hash_check.json";
+const char kHashCheck[] = "ml/hash_vectorizer/hashing_validation.json";
 
 }  // namespace
 

@@ -18,7 +18,8 @@ namespace ml {
 
 namespace {
 
-const char kPipelineSpam[] = "pipeline_spam.json";
+const char kValidSpamClassificationPipeline[] =
+    "ml/pipeline/text_processing/valid_spam_classification.json";
 
 }  // namespace
 
@@ -32,7 +33,7 @@ class BatAdsPipelineUtilTest : public UnitTestBase {
 TEST_F(BatAdsPipelineUtilTest, ParsePipelineJSONTest) {
   // Arrange
   const base::Optional<std::string> opt_value =
-      ReadFileFromTestPathToString(kPipelineSpam);
+      ReadFileFromTestPathToString(kValidSpamClassificationPipeline);
   ASSERT_TRUE(opt_value.has_value());
   const std::string json = opt_value.value();
 

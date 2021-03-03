@@ -27,13 +27,16 @@ namespace ml {
 
 namespace {
 
-const char kHashingModel[] = "hashing_model_min.json";
+const char kValidSegmentClassificationPipeline[] =
+    "ml/pipeline/text_processing/valid_segment_classification_min.json";
 
-const char kInvalidModel[] = "invalid_model.json";
+const char kInvalidSpamClassificationPipeline[] =
+    "ml/pipeline/text_processing/invalid_spam_classification.json";
 
-const char kTextCMCCrash[] = "text_cmc_crash.txt";
+const char kValidSpamClassificationPipeline[] =
+    "ml/pipeline/text_processing/valid_spam_classification.json";
 
-const char kPipelineSpam[] = "pipeline_spam.json";
+const char kTextCMCCrash[] = "ml/pipeline/text_processing/text_cmc_crash.txt";
 
 }  // namespace
 
@@ -94,7 +97,7 @@ TEST_F(BatAdsTextProcessingPipelineTest, TestLoadFromJson) {
                                                  "junk"};
 
   const base::Optional<std::string> opt_value =
-      ReadFileFromTestPathToString(kPipelineSpam);
+      ReadFileFromTestPathToString(kValidSpamClassificationPipeline);
   pipeline::TextProcessing pipeline;
 
   // Act
@@ -125,7 +128,7 @@ TEST_F(BatAdsTextProcessingPipelineTest, InitValidModelTest) {
   // Arrange
   pipeline::TextProcessing text_proc_pipeline;
   const base::Optional<std::string> opt_value =
-      ReadFileFromTestPathToString(kHashingModel);
+      ReadFileFromTestPathToString(kValidSegmentClassificationPipeline);
 
   // Act
   ASSERT_TRUE(opt_value.has_value());
@@ -140,7 +143,7 @@ TEST_F(BatAdsTextProcessingPipelineTest, InvalidModelTest) {
   // Arrange
   pipeline::TextProcessing text_proc_pipeline;
   const base::Optional<std::string> opt_value =
-      ReadFileFromTestPathToString(kInvalidModel);
+      ReadFileFromTestPathToString(kInvalidSpamClassificationPipeline);
 
   // Act
   ASSERT_TRUE(opt_value.has_value());
@@ -181,7 +184,7 @@ TEST_F(BatAdsTextProcessingPipelineTest, TopPredUnitTest) {
   const std::string kTestPage = "ethereum bitcoin bat zcash crypto tokens!";
   pipeline::TextProcessing text_proc_pipeline;
   const base::Optional<std::string> opt_value =
-      ReadFileFromTestPathToString(kHashingModel);
+      ReadFileFromTestPathToString(kValidSegmentClassificationPipeline);
 
   // Act
   ASSERT_TRUE(opt_value.has_value());
@@ -205,7 +208,7 @@ TEST_F(BatAdsTextProcessingPipelineTest, TextCMCCrashTest) {
   pipeline::TextProcessing text_proc_pipeline;
 
   const base::Optional<std::string> opt_value =
-      ReadFileFromTestPathToString(kHashingModel);
+      ReadFileFromTestPathToString(kValidSegmentClassificationPipeline);
   ASSERT_TRUE(opt_value.has_value());
 
   const std::string model_json = opt_value.value();
