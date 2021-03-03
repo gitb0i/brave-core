@@ -39,7 +39,8 @@ TextProcessing::TextProcessing(const TextProcessing& text_proc) {
   timestamp_ = text_proc.timestamp_;
   locale_ = text_proc.locale_;
   linear_model_ = text_proc.linear_model_;
-  transformations_ = GetTransformationVectorDeepCopy(text_proc.transformations_);
+  transformations_ =
+      GetTransformationVectorDeepCopy(text_proc.transformations_);
 }
 
 TextProcessing::~TextProcessing() = default;
