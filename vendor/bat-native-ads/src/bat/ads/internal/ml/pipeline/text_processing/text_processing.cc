@@ -39,7 +39,7 @@ TextProcessing::TextProcessing(const TextProcessing& text_proc) {
   timestamp_ = text_proc.timestamp_;
   locale_ = text_proc.locale_;
   linear_model_ = text_proc.linear_model_;
-  transformations_ = GetTransformationVectorCopy(text_proc.transformations_);
+  transformations_ = GetTransformationVectorDeepCopy(text_proc.transformations_);
 }
 
 TextProcessing::~TextProcessing() = default;
@@ -48,7 +48,7 @@ TextProcessing::TextProcessing(const TransformationVector& transformations,
                                const model::Linear& linear_model)
     : is_initialized_(true) {
   linear_model_ = linear_model;
-  transformations_ = GetTransformationVectorCopy(transformations);
+  transformations_ = GetTransformationVectorDeepCopy(transformations);
 }
 
 void TextProcessing::SetInfo(const PipelineInfo& info) {
@@ -56,7 +56,7 @@ void TextProcessing::SetInfo(const PipelineInfo& info) {
   timestamp_ = info.timestamp;
   locale_ = info.locale;
   linear_model_ = info.linear_model;
-  transformations_ = GetTransformationVectorCopy(info.transformations);
+  transformations_ = GetTransformationVectorDeepCopy(info.transformations);
 }
 
 bool TextProcessing::FromJson(const std::string& json) {

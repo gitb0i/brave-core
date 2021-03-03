@@ -40,7 +40,7 @@ TEST_F(BatAdsMLTransformationUtilTest, TransformationCopyTest) {
             TransformationType::NORMALIZATION);
 }
 
-TEST_F(BatAdsMLTransformationUtilTest, TransformationVectorCopyTest) {
+TEST_F(BatAdsMLTransformationUtilTest, TransformationVectorDeepCopyTest) {
   // Arrange
   const size_t kVectorSize = 2;
 
@@ -55,7 +55,7 @@ TEST_F(BatAdsMLTransformationUtilTest, TransformationVectorCopyTest) {
 
   // Act
   const TransformationVector transformation_vector_copy =
-      GetTransformationVectorCopy(transformation_vector);
+      GetTransformationVectorDeepCopy(transformation_vector);
 
   // Assert
   ASSERT_EQ(kVectorSize, transformation_vector_copy.size());

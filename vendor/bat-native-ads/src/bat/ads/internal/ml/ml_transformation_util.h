@@ -18,7 +18,7 @@ namespace ml {
 TransformationPtr GetTransformationCopy(
     const TransformationPtr& transformation_ptr);
 
-TransformationVector GetTransformationVectorCopy(
+TransformationVector GetTransformationVectorDeepCopy(
     const TransformationVector& transformation_vector);
 
 }  // namespace ml

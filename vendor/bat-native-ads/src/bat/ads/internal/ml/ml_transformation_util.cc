@@ -44,7 +44,7 @@ TransformationPtr GetTransformationCopy(
   return TransformationPtr(nullptr);
 }
 
-TransformationVector GetTransformationVectorCopy(
+TransformationVector GetTransformationVectorDeepCopy(
     const TransformationVector& transformation_vector) {
   TransformationVector transformation_vector_copy;
   const size_t transformation_count = transformation_vector.size();

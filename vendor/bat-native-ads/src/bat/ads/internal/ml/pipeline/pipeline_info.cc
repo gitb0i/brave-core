@@ -19,7 +19,7 @@ PipelineInfo::PipelineInfo(const PipelineInfo& pinfo) {
   timestamp = pinfo.timestamp;
   locale = pinfo.locale;
   linear_model = pinfo.linear_model;
-  transformations = GetTransformationVectorCopy(pinfo.transformations);
+  transformations = GetTransformationVectorDeepCopy(pinfo.transformations);
 }
 
 PipelineInfo::~PipelineInfo() = default;
@@ -33,7 +33,7 @@ PipelineInfo::PipelineInfo(const uint16_t& version,
       timestamp(timestamp),
       locale(locale),
       linear_model(linear_model) {
-  transformations = GetTransformationVectorCopy(new_transformations);
+  transformations = GetTransformationVectorDeepCopy(new_transformations);
 }
 
 }  // namespace pipeline
