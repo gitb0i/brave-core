@@ -5,5 +5,6 @@ buildflag_header("buildflags") {
   header = "buildflags.h"
   flags = [
     "BRAVE_ADS_ENABLED=$brave_ads_enabled",
+    "ENABLE_NATIVE_NOTIFICATIONS=$enable_native_notifications"
   ]
 }
