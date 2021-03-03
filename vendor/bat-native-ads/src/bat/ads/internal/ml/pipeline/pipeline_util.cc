@@ -41,14 +41,13 @@ base::Optional<TransformationVector> ParseTransformationsJSON(
 
     if (parsed_transformation_type.compare("TO_LOWER") == 0) {
       transformations.value().push_back(
-          std::make_unique<transformation::Lowercase>(
-              transformation::Lowercase()));
+          std::make_unique<LowercaseTransformation>(LowercaseTransformation()));
     }
 
     if (parsed_transformation_type.compare("NORMALIZE") == 0) {
       transformations.value().push_back(
-          std::make_unique<transformation::Normalization>(
-              transformation::Normalization()));
+          std::make_unique<NormalizationTransformation>(
+              NormalizationTransformation()));
     }
 
     if (parsed_transformation_type.compare("HASHED_NGRAMS") == 0) {
@@ -80,9 +79,9 @@ base::Optional<TransformationVector> ParseTransformationsJSON(
         const base::Value& n = ngram_range_list[i];
         ngram_range.push_back(n.GetInt());
       }
-      transformation::HashedNGrams hashed_ngrams(num_buckets, ngram_range);
+      HashedNGramsTransformation hashed_ngrams(num_buckets, ngram_range);
       transformations.value().push_back(
-          std::make_unique<transformation::HashedNGrams>(hashed_ngrams));
+          std::make_unique<HashedNGramsTransformation>(hashed_ngrams));
     }
   }
 

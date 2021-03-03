@@ -31,7 +31,7 @@ TEST_F(BatAdsLowercaseTest, LowercaseTest) {
   const std::unique_ptr<Data> uppercase_data =
       std::make_unique<TextData>(kUppercaseStr);
 
-  const transformation::Lowercase lowercase;
+  const LowercaseTransformation lowercase;
 
   // Act
   const std::unique_ptr<Data> lowercase_data = lowercase.Apply(uppercase_data);

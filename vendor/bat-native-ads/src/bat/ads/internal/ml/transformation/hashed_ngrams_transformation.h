@@ -14,21 +14,21 @@
 
 namespace ads {
 namespace ml {
-namespace transformation {
 
 class HashVectorizer;
 
-class HashedNGrams : public Transformation {
+class HashedNGramsTransformation : public Transformation {
  public:
-  HashedNGrams();
+  HashedNGramsTransformation();
 
-  HashedNGrams(const HashedNGrams& hashed_ngrams);
+  HashedNGramsTransformation(const HashedNGramsTransformation& hashed_ngrams);
 
-  HashedNGrams(const int bucket_count, const std::vector<int>& subgrams);
+  HashedNGramsTransformation(const int bucket_count,
+                             const std::vector<int>& subgrams);
 
-  ~HashedNGrams() override;
+  ~HashedNGramsTransformation() override;
 
-  explicit HashedNGrams(const std::string& parameters);
+  explicit HashedNGramsTransformation(const std::string& parameters);
 
   std::unique_ptr<Data> Apply(
       const std::unique_ptr<Data>& input_data) const override;
@@ -37,7 +37,6 @@ class HashedNGrams : public Transformation {
   std::unique_ptr<HashVectorizer> hash_vectorizer;
 };
 
-}  // namespace transformation
 }  // namespace ml
 }  // namespace ads
 

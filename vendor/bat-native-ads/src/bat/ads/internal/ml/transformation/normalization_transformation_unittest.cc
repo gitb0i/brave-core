@@ -38,8 +38,8 @@ TEST_F(BatAdsNormalizationTest, NormalizationTest) {
   TextData text_data(kTestString);
   std::unique_ptr<Data> data = std::make_unique<TextData>(text_data);
 
-  transformation::HashedNGrams hashed_ngrams(10, std::vector<int>{3, 4});
-  transformation::Normalization normalization;
+  HashedNGramsTransformation hashed_ngrams(10, std::vector<int>{3, 4});
+  NormalizationTransformation normalization;
 
   // Act
   data = hashed_ngrams.Apply(data);
@@ -73,16 +73,14 @@ TEST_F(BatAdsNormalizationTest, ChainingTest) {
 
   TransformationVector chain;
 
-  const transformation::Lowercase lowercase;
-  chain.push_back(std::make_unique<transformation::Lowercase>(lowercase));
+  const LowercaseTransformation lowercase;
+  chain.push_back(std::make_unique<LowercaseTransformation>(lowercase));
 
-  const transformation::HashedNGrams hashed_ngrams;
-  chain.push_back(
-      std::make_unique<transformation::HashedNGrams>(hashed_ngrams));
+  const HashedNGramsTransformation hashed_ngrams;
+  chain.push_back(std::make_unique<HashedNGramsTransformation>(hashed_ngrams));
 
-  const transformation::Normalization normalization;
-  chain.push_back(
-      std::make_unique<transformation::Normalization>(normalization));
+  const NormalizationTransformation normalization;
+  chain.push_back(std::make_unique<NormalizationTransformation>(normalization));
 
   const TextData text_data(kTestString);
   std::unique_ptr<Data> data = std::make_unique<TextData>(text_data);

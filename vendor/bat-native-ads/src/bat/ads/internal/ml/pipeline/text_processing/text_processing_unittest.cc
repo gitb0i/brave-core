@@ -51,12 +51,12 @@ TEST_F(BatAdsTextProcessingPipelineTest, BuildSimplePipeline) {
   const std::string kTestString = "Test String";
 
   TransformationVector transformations;
-  transformation::Lowercase lowercase;
+  LowercaseTransformation lowercase;
   transformations.push_back(
-      std::make_unique<transformation::Lowercase>(lowercase));
-  transformation::HashedNGrams hashed_ngrams(3, std::vector<int>{1, 2, 3});
+      std::make_unique<LowercaseTransformation>(lowercase));
+  HashedNGramsTransformation hashed_ngrams(3, std::vector<int>{1, 2, 3});
   transformations.push_back(
-      std::make_unique<transformation::HashedNGrams>(hashed_ngrams));
+      std::make_unique<HashedNGramsTransformation>(hashed_ngrams));
 
   const std::map<std::string, VectorData> weights = {
       {"class_1", VectorData(std::vector<double>{1.0, 2.0, 3.0})},

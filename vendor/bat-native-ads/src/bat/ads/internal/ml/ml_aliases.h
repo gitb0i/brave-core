@@ -14,12 +14,10 @@
 namespace ads {
 namespace ml {
 
-namespace transformation {
 class Transformation;
-}  // namespace transformation
 
 using PredictionMap = std::map<std::string, double>;
-using TransformationPtr = std::unique_ptr<transformation::Transformation>;
+using TransformationPtr = std::unique_ptr<Transformation>;
 using TransformationVector = std::vector<TransformationPtr>;
 
 }  // namespace ml

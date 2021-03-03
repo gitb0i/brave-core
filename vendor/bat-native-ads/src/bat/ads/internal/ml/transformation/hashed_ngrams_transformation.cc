@@ -15,29 +15,30 @@
 
 namespace ads {
 namespace ml {
-namespace transformation {
 
-HashedNGrams::HashedNGrams()
+HashedNGramsTransformation::HashedNGramsTransformation()
     : Transformation(TransformationType::HASHED_NGRAMS) {
   hash_vectorizer = std::make_unique<HashVectorizer>(HashVectorizer());
 }
 
-HashedNGrams::HashedNGrams(const HashedNGrams& hashed_ngrams)
+HashedNGramsTransformation::HashedNGramsTransformation(
+    const HashedNGramsTransformation& hashed_ngrams)
     : Transformation(TransformationType::HASHED_NGRAMS) {
   HashVectorizer hash_vectorizer_copy = *(hashed_ngrams.hash_vectorizer);
   hash_vectorizer = std::make_unique<HashVectorizer>(hash_vectorizer_copy);
 }
 
-HashedNGrams::~HashedNGrams() = default;
+HashedNGramsTransformation::~HashedNGramsTransformation() = default;
 
-HashedNGrams::HashedNGrams(const int bucket_count,
-                           const std::vector<int>& subgrams)
+HashedNGramsTransformation::HashedNGramsTransformation(
+    const int bucket_count,
+    const std::vector<int>& subgrams)
     : Transformation(TransformationType::HASHED_NGRAMS) {
   hash_vectorizer =
       std::make_unique<HashVectorizer>(HashVectorizer(bucket_count, subgrams));
 }
 
-std::unique_ptr<Data> HashedNGrams::Apply(
+std::unique_ptr<Data> HashedNGramsTransformation::Apply(
     const std::unique_ptr<Data>& input_data) const {
   if (input_data->GetType() != DataType::TEXT_DATA) {
     return std::make_unique<Data>(VectorData(0, std::map<unsigned, double>()));
@@ -52,6 +53,5 @@ std::unique_ptr<Data> HashedNGrams::Apply(
   return std::make_unique<VectorData>(VectorData(dimension_count, frequences));
 }
 
-}  // namespace transformation
 }  // namespace ml
 }  // namespace ads

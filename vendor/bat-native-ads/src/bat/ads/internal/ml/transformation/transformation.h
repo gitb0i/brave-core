@@ -12,7 +12,6 @@
 
 namespace ads {
 namespace ml {
-namespace transformation {
 
 enum class TransformationType {
   LOWERCASE = 0,
@@ -37,7 +36,6 @@ class Transformation {
   const TransformationType type_;
 };
 
-}  // namespace transformation
 }  // namespace ml
 }  // namespace ads
 

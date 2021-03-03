@@ -7,7 +7,6 @@
 
 namespace ads {
 namespace ml {
-namespace transformation {
 
 Transformation::Transformation(const TransformationType& type) : type_(type) {}
 
@@ -19,6 +18,5 @@ TransformationType Transformation::GetType() const {
   return type_;
 }
 
-}  // namespace transformation
 }  // namespace ml
 }  // namespace ads

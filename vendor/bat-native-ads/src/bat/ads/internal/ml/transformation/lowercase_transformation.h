@@ -13,19 +13,17 @@
 
 namespace ads {
 namespace ml {
-namespace transformation {
 
-class Lowercase : public Transformation {
+class LowercaseTransformation : public Transformation {
  public:
-  Lowercase();
+  LowercaseTransformation();
 
-  ~Lowercase() override;
+  ~LowercaseTransformation() override;
 
   std::unique_ptr<Data> Apply(
       const std::unique_ptr<Data>& input_data) const override;
 };
 
-}  // namespace transformation
 }  // namespace ml
 }  // namespace ads
 

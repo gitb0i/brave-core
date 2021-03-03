@@ -58,7 +58,7 @@ void RunHashingExtractorTestCase(const std::string& test_case_name) {
   ASSERT_TRUE(count);
 
   const std::string input_value = *input;
-  const transformation::HashVectorizer vectorizer;
+  const HashVectorizer vectorizer;
   const std::map<unsigned, double> frequencies =
       vectorizer.GetFrequencies(input_value);
   auto idx_list = idx->GetList();

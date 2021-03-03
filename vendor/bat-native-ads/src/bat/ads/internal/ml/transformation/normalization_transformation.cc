@@ -12,14 +12,13 @@
 
 namespace ads {
 namespace ml {
-namespace transformation {
 
-Normalization::Normalization()
+NormalizationTransformation::NormalizationTransformation()
     : Transformation(TransformationType::NORMALIZATION) {}
 
-Normalization::~Normalization() = default;
+NormalizationTransformation::~NormalizationTransformation() = default;
 
-std::unique_ptr<Data> Normalization::Apply(
+std::unique_ptr<Data> NormalizationTransformation::Apply(
     const std::unique_ptr<Data>& input_data) const {
   if (input_data->GetType() != DataType::VECTOR_DATA) {
     return std::make_unique<VectorData>(
@@ -33,6 +32,5 @@ std::unique_ptr<Data> Normalization::Apply(
   return std::make_unique<VectorData>(vector_data_copy);
 }
 
-}  // namespace transformation
 }  // namespace ml
 }  // namespace ads

@@ -13,7 +13,6 @@
 
 namespace ads {
 namespace ml {
-namespace transformation {
 
 class HashVectorizer {
  public:
@@ -38,7 +37,6 @@ class HashVectorizer {
   int bucket_count_;
 };
 
-}  // namespace transformation
 }  // namespace ml
 }  // namespace ads
 

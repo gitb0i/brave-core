@@ -15,7 +15,6 @@
 
 namespace ads {
 namespace ml {
-namespace transformation {
 
 namespace {
 const int kMaximumHtmlLengthToClassify = (1 << 20);
@@ -80,6 +79,5 @@ std::map<uint32_t, double> HashVectorizer::GetFrequencies(
   return frequencies;
 }
 
-}  // namespace transformation
 }  // namespace ml
 }  // namespace ads

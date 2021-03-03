@@ -36,29 +36,26 @@ PredictionMap Softmax(const PredictionMap& predictions) {
 // NOTREACHED() is used to protect from handling unknown transformation types
 TransformationPtr GetTransformationCopy(
     const TransformationPtr& transformation_ptr) {
-  if (transformation_ptr->GetType() ==
-      transformation::TransformationType::LOWERCASE) {
-    transformation::Lowercase* lowercase_ptr =
-        static_cast<transformation::Lowercase*>(transformation_ptr.get());
-    transformation::Lowercase lowercase_copy = *lowercase_ptr;
-    return std::make_unique<transformation::Lowercase>(lowercase_copy);
+  if (transformation_ptr->GetType() == TransformationType::LOWERCASE) {
+    LowercaseTransformation* lowercase_ptr =
+        static_cast<LowercaseTransformation*>(transformation_ptr.get());
+    LowercaseTransformation lowercase_copy = *lowercase_ptr;
+    return std::make_unique<LowercaseTransformation>(lowercase_copy);
   }
 
-  if (transformation_ptr->GetType() ==
-      transformation::TransformationType::HASHED_NGRAMS) {
-    transformation::HashedNGrams* hashed_n_grams_ptr =
-        static_cast<transformation::HashedNGrams*>(transformation_ptr.get());
-    transformation::HashedNGrams hashed_n_grams_ptr_copy = *hashed_n_grams_ptr;
-    return std::make_unique<transformation::HashedNGrams>(
+  if (transformation_ptr->GetType() == TransformationType::HASHED_NGRAMS) {
+    HashedNGramsTransformation* hashed_n_grams_ptr =
+        static_cast<HashedNGramsTransformation*>(transformation_ptr.get());
+    HashedNGramsTransformation hashed_n_grams_ptr_copy = *hashed_n_grams_ptr;
+    return std::make_unique<HashedNGramsTransformation>(
         hashed_n_grams_ptr_copy);
   }
 
-  if (transformation_ptr->GetType() ==
-      transformation::TransformationType::NORMALIZATION) {
-    transformation::Normalization* normalization_ptr =
-        static_cast<transformation::Normalization*>(transformation_ptr.get());
-    transformation::Normalization normalization_copy = *normalization_ptr;
-    return std::make_unique<transformation::Normalization>(normalization_copy);
+  if (transformation_ptr->GetType() == TransformationType::NORMALIZATION) {
+    NormalizationTransformation* normalization_ptr =
+        static_cast<NormalizationTransformation*>(transformation_ptr.get());
+    NormalizationTransformation normalization_copy = *normalization_ptr;
+    return std::make_unique<NormalizationTransformation>(normalization_copy);
   }
 
   NOTREACHED();

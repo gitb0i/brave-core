@@ -12,19 +12,17 @@
 
 namespace ads {
 namespace ml {
-namespace transformation {
 
-class Normalization : public Transformation {
+class NormalizationTransformation : public Transformation {
  public:
-  Normalization();
+  NormalizationTransformation();
 
-  ~Normalization() override;
+  ~NormalizationTransformation() override;
 
   std::unique_ptr<Data> Apply(
       const std::unique_ptr<Data>& input_data) const override;
 };
 
-}  // namespace transformation
 }  // namespace ml
 }  // namespace ads
 

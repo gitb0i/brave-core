@@ -78,9 +78,9 @@ TEST_F(BatAdsMLToolsUtilTest, ExtendedSoftmaxTest) {
 
 TEST_F(BatAdsMLToolsUtilTest, TransformationCopyTest) {
   // Arrange
-  const transformation::Normalization normalization;
+  const NormalizationTransformation normalization;
   TransformationPtr transformation_ptr =
-      std::make_unique<transformation::Normalization>(normalization);
+      std::make_unique<NormalizationTransformation>(normalization);
 
   // Act
   const TransformationPtr transformation_ptr_copy =
@@ -88,7 +88,7 @@ TEST_F(BatAdsMLToolsUtilTest, TransformationCopyTest) {
 
   // Assert
   EXPECT_EQ(transformation_ptr_copy->GetType(),
-            transformation::TransformationType::NORMALIZATION);
+            TransformationType::NORMALIZATION);
 }
 
 TEST_F(BatAdsMLToolsUtilTest, TransformationVectorCopyTest) {
@@ -96,13 +96,13 @@ TEST_F(BatAdsMLToolsUtilTest, TransformationVectorCopyTest) {
   const size_t kVectorSize = 2;
 
   TransformationVector transformation_vector;
-  const transformation::HashedNGrams hashed_ngrams;
+  const HashedNGramsTransformation hashed_ngrams;
   transformation_vector.push_back(
-      std::make_unique<transformation::HashedNGrams>(hashed_ngrams));
+      std::make_unique<HashedNGramsTransformation>(hashed_ngrams));
 
-  const transformation::Normalization normalization;
+  const NormalizationTransformation normalization;
   transformation_vector.push_back(
-      std::make_unique<transformation::Normalization>(normalization));
+      std::make_unique<NormalizationTransformation>(normalization));
 
   // Act
   const TransformationVector transformation_vector_copy =
@@ -111,9 +111,9 @@ TEST_F(BatAdsMLToolsUtilTest, TransformationVectorCopyTest) {
   // Assert
   ASSERT_EQ(kVectorSize, transformation_vector_copy.size());
   EXPECT_TRUE(transformation_vector_copy[0]->GetType() ==
-                  transformation::TransformationType::HASHED_NGRAMS &&
+                  TransformationType::HASHED_NGRAMS &&
               transformation_vector_copy[1]->GetType() ==
-                  transformation::TransformationType::NORMALIZATION);
+                  TransformationType::NORMALIZATION);
 }
 
 }  // namespace ml

@@ -12,13 +12,13 @@
 
 namespace ads {
 namespace ml {
-namespace transformation {
 
-Lowercase::Lowercase() : Transformation(TransformationType::LOWERCASE) {}
+LowercaseTransformation::LowercaseTransformation()
+    : Transformation(TransformationType::LOWERCASE) {}
 
-Lowercase::~Lowercase() = default;
+LowercaseTransformation::~LowercaseTransformation() = default;
 
-std::unique_ptr<Data> Lowercase::Apply(
+std::unique_ptr<Data> LowercaseTransformation::Apply(
     const std::unique_ptr<Data>& input_data) const {
   if (input_data->GetType() != DataType::TEXT_DATA) {
     return std::make_unique<Data>(TextData(""));
@@ -31,6 +31,5 @@ std::unique_ptr<Data> Lowercase::Apply(
   return std::make_unique<TextData>(TextData(lowercase_text));
 }
 
-}  // namespace transformation
 }  // namespace ml
 }  // namespace ads
