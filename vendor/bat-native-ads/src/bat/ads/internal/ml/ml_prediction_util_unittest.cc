@@ -8,7 +8,7 @@
 #include <memory>
 #include <string>
 
-#include "bat/ads/internal/ml/ml_util.h"
+#include "bat/ads/internal/ml/ml_prediction_util.h"
 
 #include "bat/ads/internal/unittest_base.h"
 #include "bat/ads/internal/unittest_util.h"
@@ -18,14 +18,14 @@
 namespace ads {
 namespace ml {
 
-class BatAdsMLToolsUtilTest : public UnitTestBase {
+class BatAdsMLPredictionUtilTest : public UnitTestBase {
  protected:
-  BatAdsMLToolsUtilTest() = default;
+  BatAdsMLPredictionUtilTest() = default;
 
-  ~BatAdsMLToolsUtilTest() override = default;
+  ~BatAdsMLPredictionUtilTest() override = default;
 };
 
-TEST_F(BatAdsMLToolsUtilTest, SoftmaxTest) {
+TEST_F(BatAdsMLPredictionUtilTest, SoftmaxTest) {
   // Arrange
   const double kTolerance = 1e-8;
 
@@ -49,7 +49,7 @@ TEST_F(BatAdsMLToolsUtilTest, SoftmaxTest) {
   EXPECT_LT(sum - 1.0, kTolerance);
 }
 
-TEST_F(BatAdsMLToolsUtilTest, ExtendedSoftmaxTest) {
+TEST_F(BatAdsMLPredictionUtilTest, ExtendedSoftmaxTest) {
   // Arrange
   const double kTolerance = 1e-8;
 
@@ -74,46 +74,6 @@ TEST_F(BatAdsMLToolsUtilTest, ExtendedSoftmaxTest) {
   EXPECT_TRUE(std::fabs(predictions_1.at("c1") - 0.09003057) < kTolerance &&
               std::fabs(predictions_1.at("c2") - 0.24472847) < kTolerance &&
               std::fabs(predictions_1.at("c3") - 0.66524095) < kTolerance);
-}
-
-TEST_F(BatAdsMLToolsUtilTest, TransformationCopyTest) {
-  // Arrange
-  const NormalizationTransformation normalization;
-  TransformationPtr transformation_ptr =
-      std::make_unique<NormalizationTransformation>(normalization);
-
-  // Act
-  const TransformationPtr transformation_ptr_copy =
-      GetTransformationCopy(transformation_ptr);
-
-  // Assert
-  EXPECT_EQ(transformation_ptr_copy->GetType(),
-            TransformationType::NORMALIZATION);
-}
-
-TEST_F(BatAdsMLToolsUtilTest, TransformationVectorCopyTest) {
-  // Arrange
-  const size_t kVectorSize = 2;
-
-  TransformationVector transformation_vector;
-  const HashedNGramsTransformation hashed_ngrams;
-  transformation_vector.push_back(
-      std::make_unique<HashedNGramsTransformation>(hashed_ngrams));
-
-  const NormalizationTransformation normalization;
-  transformation_vector.push_back(
-      std::make_unique<NormalizationTransformation>(normalization));
-
-  // Act
-  const TransformationVector transformation_vector_copy =
-      GetTransformationVectorCopy(transformation_vector);
-
-  // Assert
-  ASSERT_EQ(kVectorSize, transformation_vector_copy.size());
-  EXPECT_TRUE(transformation_vector_copy[0]->GetType() ==
-                  TransformationType::HASHED_NGRAMS &&
-              transformation_vector_copy[1]->GetType() ==
-                  TransformationType::NORMALIZATION);
 }
 
 }  // namespace ml
