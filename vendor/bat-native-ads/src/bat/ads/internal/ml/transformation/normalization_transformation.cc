@@ -7,6 +7,7 @@
 #include <memory>
 #include <string>
 
+#include "base/values.h"
 #include "bat/ads/internal/ml/data/vector_data.h"
 #include "bat/ads/internal/ml/transformation/normalization_transformation.h"
 
@@ -20,10 +21,7 @@ NormalizationTransformation::~NormalizationTransformation() = default;
 
 std::unique_ptr<Data> NormalizationTransformation::Apply(
     const std::unique_ptr<Data>& input_data) const {
-  if (input_data->GetType() != DataType::VECTOR_DATA) {
-    return std::make_unique<VectorData>(
-        VectorData(0, std::map<unsigned, double>()));
-  }
+  DCHECK(input_data->GetType() == DataType::VECTOR_DATA);
 
   VectorData* vector_data = static_cast<VectorData*>(input_data.get());
 

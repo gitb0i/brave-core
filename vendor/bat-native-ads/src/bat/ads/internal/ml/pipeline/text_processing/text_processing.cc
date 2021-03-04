@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <memory>
 
+#include "base/values.h"
 #include "bat/ads/internal/ml/data/text_data.h"
 #include "bat/ads/internal/ml/data/vector_data.h"
 #include "bat/ads/internal/ml/ml_aliases.h"

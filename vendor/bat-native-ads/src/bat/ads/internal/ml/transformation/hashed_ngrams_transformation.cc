@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 
+#include "base/values.h"
 #include "bat/ads/internal/ml/data/text_data.h"
 #include "bat/ads/internal/ml/data/vector_data.h"
 #include "bat/ads/internal/ml/transformation/hash_vectorizer.h"
@@ -40,9 +41,7 @@ HashedNGramsTransformation::HashedNGramsTransformation(
 
 std::unique_ptr<Data> HashedNGramsTransformation::Apply(
     const std::unique_ptr<Data>& input_data) const {
-  if (input_data->GetType() != DataType::TEXT_DATA) {
-    return std::make_unique<Data>(VectorData(0, std::map<unsigned, double>()));
-  }
+  DCHECK(input_data->GetType() == DataType::TEXT_DATA);
 
   TextData* text_data = static_cast<TextData*>(input_data.get());
 

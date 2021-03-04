@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 
+#include "base/values.h"
 #include "base/strings/string_util.h"
 #include "bat/ads/internal/ml/data/text_data.h"
 #include "bat/ads/internal/ml/transformation/lowercase_transformation.h"
@@ -20,9 +21,7 @@ LowercaseTransformation::~LowercaseTransformation() = default;
 
 std::unique_ptr<Data> LowercaseTransformation::Apply(
     const std::unique_ptr<Data>& input_data) const {
-  if (input_data->GetType() != DataType::TEXT_DATA) {
-    return std::make_unique<Data>(TextData(""));
-  }
+  DCHECK(input_data->GetType() == DataType::TEXT_DATA);
 
   TextData* text_data = static_cast<TextData*>(input_data.get());
 

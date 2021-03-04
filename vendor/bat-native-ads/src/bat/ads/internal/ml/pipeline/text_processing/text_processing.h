@@ -12,20 +12,12 @@
 #include <string>
 #include <vector>
 
-#include "base/values.h"
 #include "bat/ads/internal/ml/ml_aliases.h"
 #include "bat/ads/internal/ml/model/linear/linear.h"
 #include "bat/ads/internal/ml/transformation/transformation.h"
 
 namespace ads {
 namespace ml {
-
-namespace data {
-
-class Data;
-
-}  // namespace data
-
 namespace pipeline {
 
 struct PipelineInfo;
