@@ -9,6 +9,7 @@
 #include <string>
 
 #include "base/files/file.h"
+#include "base/memory/weak_ptr.h"
 
 namespace brave_rewards {
 
@@ -23,6 +24,13 @@ bool TailFileAsString(
 
 std::string GetLastFileError(
     base::File* file);
+
+class FileWeakWrapper : public base::File,
+                        public base::SupportsWeakPtr<FileWeakWrapper> {
+ public:
+  FileWeakWrapper() {}
+  ~FileWeakWrapper() {}
+};
 
 }  // namespace brave_rewards
 
