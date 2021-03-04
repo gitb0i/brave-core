@@ -44,8 +44,6 @@ size_t GetBraveAvatarIconStartIndex();
 }  // namespace profiles
 
 // Override some functions (see implementations for details).
-#define GetCustomProfileAvatarIconsAndLabels \
-  GetCustomProfileAvatarIconsAndLabels_ChromiumImpl
 #define IsDefaultAvatarIconUrl IsDefaultAvatarIconUrl_ChromiumImpl
 #define GetGuestAvatar GetGuestAvatar_ChromiumImpl
 #define GetPlaceholderAvatarIconWithColors \
@@ -56,7 +54,6 @@ size_t GetBraveAvatarIconStartIndex();
 #include "../../../../../chrome/browser/profiles/profile_avatar_icon_util.cc"
 #undef BRAVE_GET_DEFAULT_AVATAR_ICON_RESOURCE_INFO
 #undef BRAVE_GET_MODERN_AVATAR_ICON_START_INDEX
-#undef GetCustomProfileAvatarIconsAndLabels
 #undef IsDefaultAvatarIconUrl
 #undef GetGuestAvatar
 #undef GetPlaceholderAvatarIconWithColors
@@ -160,23 +157,6 @@ const IconResourceInfo* GetBraveDefaultAvatarIconResourceInfo(
       "kBraveDefaultAvatarIconsCount but should be the same.");
   return &resource_info[index];
 #endif
-}
-
-std::unique_ptr<base::ListValue> GetCustomProfileAvatarIconsAndLabels(
-    size_t selected_avatar_idx) {
-  auto avatars =
-      GetCustomProfileAvatarIconsAndLabels_ChromiumImpl(selected_avatar_idx);
-#if !defined(OS_CHROMEOS) && !defined(OS_ANDROID)
-  //  Insert the 'placeholder' item, so it is still selectable
-  //  in the Settings and Profile Manager WebUI.
-  avatars->Insert(
-      0, GetAvatarIconAndLabelDict(
-             profiles::GetPlaceholderAvatarIconUrl(),
-             l10n_util::GetStringUTF16(IDS_BRAVE_AVATAR_LABEL_PLACEHOLDER),
-             GetPlaceholderAvatarIndex(),
-             selected_avatar_idx == GetPlaceholderAvatarIndex(), false));
-#endif
-  return avatars;
 }
 
 bool IsDefaultAvatarIconUrl(const std::string& url, size_t* icon_index) {
