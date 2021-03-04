@@ -51,6 +51,8 @@ class BraveProfileSyncService : public ProfileSyncService {
 
   void OnBraveSyncPrefsChanged(const std::string& path);
 
+  void OnSyncCycleCompleted(const SyncCycleSnapshot& snapshot) override;
+
   brave_sync::Prefs brave_sync_prefs_;
 
   PrefChangeRegistrar brave_sync_prefs_change_registrar_;

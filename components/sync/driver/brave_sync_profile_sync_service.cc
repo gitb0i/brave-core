@@ -109,4 +109,21 @@ void BraveProfileSyncService::ResumeDeviceObserver() {
   profile_service_delegate_->ResumeDeviceObserver();
 }
 
+//static bool g_b_reset_progress_marker = false;
+extern bool g_b_reset_progress_marker;
+
+void BraveProfileSyncService::OnSyncCycleCompleted(
+    const SyncCycleSnapshot& snapshot) {
+DLOG(ERROR) << "[BraveSync] " << __func__ << " 000 g_b_reset_progress_marker=" << g_b_reset_progress_marker;
+  ProfileSyncService::OnSyncCycleCompleted(snapshot);
+  SyncerError last_commit_result = snapshot.model_neutral_state().commit_result;
+  if (last_commit_result.value() ==
+          syncer::SyncerError::SERVER_RETURN_TRANSIENT_ERROR ||
+      last_commit_result.value() ==
+          syncer::SyncerError::SERVER_RETURN_CONFLICT) {
+DLOG(ERROR) << "[BraveSync] " << __func__ << " Will reset progress marker!!!";
+    g_b_reset_progress_marker = true;
+  }
+}
+
 }  // namespace syncer
