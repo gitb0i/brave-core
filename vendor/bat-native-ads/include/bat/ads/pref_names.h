@@ -10,10 +10,10 @@
 
 namespace ads {
 
-// Ads per hour are user configurable with the brave://rewards ads UI
+// Ads per hour are user configurable within the brave://rewards ads UI
 const uint64_t kMinimumAdNotificationsPerHour = 1;
 const uint64_t kMaximumAdNotificationsPerHour = 5;
-const uint64_t kDefaultAdNotificationsPerHour = 2;
+const uint64_t kDefaultAdNotificationsPerHour = 5;
 
 namespace prefs {
 
@@ -23,7 +23,7 @@ extern const char kShouldAllowConversionTracking[];
 
 extern const char kAdsPerHour[];
 
-extern const char kIdleThreshold[];
+extern const char kIdleTimeThreshold[];
 
 extern const char kShouldAllowAdsSubdivisionTargeting[];
 extern const char kAdsSubdivisionTargetingCode[];
