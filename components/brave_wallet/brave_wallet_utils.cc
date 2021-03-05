@@ -7,12 +7,16 @@
 
 #include <algorithm>
 #include <sstream>
+#include <utility>
 
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "brave/third_party/ethash/src/include/ethash/keccak.h"
+#include "brave/vendor/bip39wally-core-native/include/wally_bip39.h"
+#include "crypto/random.h"
+#include "third_party/boringssl/src/include/openssl/evp.h"
 
 namespace brave_wallet {
 
@@ -131,6 +135,50 @@ std::string Uint256ValueToHex(uint256_t input) {
   std::string reversed_hex = ss.str();
   std::string out(reversed_hex.rbegin(), reversed_hex.rend());
   return out;
+}
+
+std::string GenerateMnemonic(const std::vector<uint8_t>& entropy) {
+  uint8_t* entropy_in = const_cast<uint8_t*>(entropy.data());
+  size_t size_in = entropy.size();
+
+  // If input entropy is empty, we generate a random 128 bits
+  std::vector<uint8_t> bytes(16);
+  if (entropy.empty()) {
+    crypto::RandBytes(&bytes[0], bytes.size());
+    entropy_in = bytes.data();
+    size_in = bytes.size();
+  }
+
+  // entropy size should be 128-256 bits
+  if (size_in < 16 || size_in > 32) {
+    LOG(ERROR) << __func__ << ": Entropy should be 128-256 bits";
+    return "";
+  }
+
+  char* words = nullptr;
+  std::string result;
+  if (bip39_mnemonic_from_bytes(nullptr, entropy_in, size_in, &words) !=
+      WALLY_OK) {
+    LOG(ERROR) << __func__ << ": bip39_mnemonic_from_bytes failed";
+    return result;
+  }
+  result = words;
+  wally_free_string(words);
+
+  return result;
+}
+
+std::unique_ptr<std::vector<uint8_t>> MnemonicToSeed(
+    const std::string& mnemonic,
+    const std::string& passphrase) {
+  std::unique_ptr<std::vector<uint8_t>> seed =
+      std::make_unique<std::vector<uint8_t>>(64);
+  const std::string salt = "mnemonic" + passphrase;
+  int rv = PKCS5_PBKDF2_HMAC(mnemonic.data(), mnemonic.length(),
+                             reinterpret_cast<const uint8_t*>(salt.data()),
+                             salt.length(), 2048, EVP_sha512(), seed->size(),
+                             seed->data());
+  return rv == 1 ? std::move(seed) : nullptr;
 }
 
 }  // namespace brave_wallet
